@@ -9,8 +9,8 @@ import org.hibernate.SessionFactory;
 import com.github.ko2ic.core.Person;
 import com.google.common.base.Optional;
 
-public class PersonDao extends AbstractDAO<Person> {
-	public PersonDao(SessionFactory factory) {
+public class PersonRepository extends AbstractDAO<Person> {
+	public PersonRepository(SessionFactory factory) {
 		super(factory);
 	}
 

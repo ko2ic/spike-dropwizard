@@ -9,12 +9,12 @@ import org.junit.ClassRule;
 import org.junit.Test;
 
 import com.github.ko2ic.core.Person;
-import com.github.ko2ic.db.PersonDao;
+import com.github.ko2ic.db.PersonRepository;
 import com.google.common.base.Optional;
 
 public class PeopleResourceTest {
 
-	private static final PersonDao dao = mock(PersonDao.class);
+	private static final PersonRepository dao = mock(PersonRepository.class);
 
 	@ClassRule
 	public static final ResourceTestRule resources = ResourceTestRule.builder()

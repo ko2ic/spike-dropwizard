@@ -8,7 +8,7 @@ import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 
 import com.github.ko2ic.core.Person;
 
-public interface PersonJdbiDao {
+public interface PersonJdbiRepository {
 
 	@SqlQuery("select id, fullName, jobTitle from people where id = :id")
 	@Mapper(PersonJdbiMapper.class)

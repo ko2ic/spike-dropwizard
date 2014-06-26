@@ -13,7 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.github.ko2ic.core.Person;
-import com.github.ko2ic.db.PersonDao;
+import com.github.ko2ic.db.PersonRepository;
 import com.google.common.base.Optional;
 import com.sun.jersey.api.NotFoundException;
 
@@ -21,29 +21,29 @@ import com.sun.jersey.api.NotFoundException;
 @Produces(MediaType.APPLICATION_JSON)
 public class PeopleResource {
 
-	private final PersonDao peopleDAO;
+	private final PersonRepository repository;
 
-	public PeopleResource(PersonDao peopleDAO) {
-		this.peopleDAO = peopleDAO;
+	public PeopleResource(PersonRepository repository) {
+		this.repository = repository;
 	}
 
 	@POST
 	@UnitOfWork
 	public Person createPerson(Person person) {
-		return peopleDAO.create(person);
+		return repository.create(person);
 	}
 
 	@GET
 	@UnitOfWork
 	public List<Person> listPeople() {
-		return peopleDAO.findAll();
+		return repository.findAll();
 	}
 
 	@GET
 	@UnitOfWork
 	@Path("/{personId}")
 	public Person getPerson(@PathParam("personId") LongParam personId) {
-		final Optional<Person> person = peopleDAO.findById(personId.get());
+		final Optional<Person> person = repository.findById(personId.get());
 		if (!person.isPresent()) {
 			throw new NotFoundException("{status:notfound}");
 		}

@@ -16,8 +16,8 @@ import org.skife.jdbi.v2.DBI;
 import com.github.ko2ic.auth.ExampleAuthenticator;
 import com.github.ko2ic.core.Person;
 import com.github.ko2ic.core.Template;
-import com.github.ko2ic.db.PersonDao;
-import com.github.ko2ic.db.PersonJdbiDao;
+import com.github.ko2ic.db.PersonRepository;
+import com.github.ko2ic.db.PersonJdbiRepository;
 import com.github.ko2ic.health.TemplateHealthCheck;
 import com.github.ko2ic.resources.HelloWorldResource;
 import com.github.ko2ic.resources.PeopleJdbiResource;
@@ -62,7 +62,7 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
 	@Override
 	public void run(HelloWorldConfiguration configuration,
 			Environment environment) throws ClassNotFoundException {
-		final PersonDao dao = new PersonDao(hibernateBundle.getSessionFactory());
+		final PersonRepository repository = new PersonRepository(hibernateBundle.getSessionFactory());
 		final Template template = configuration.buildTemplate();
 
 		environment.healthChecks().register("template",
@@ -74,13 +74,13 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
 		environment.jersey().register(new HelloWorldResource(template));
 		environment.jersey().register(new ViewResource());
 		environment.jersey().register(new ProtectedResource());
-		environment.jersey().register(new PeopleResource(dao));
+		environment.jersey().register(new PeopleResource(repository));
 
 		final DBIFactory factory = new DBIFactory();
 		final DBI jdbi = factory.build(environment,
 				configuration.getDataSourceFactory(), "jdbi");
-		PersonJdbiDao jdbiDao = jdbi.onDemand(PersonJdbiDao.class);
-		environment.jersey().register(new PeopleJdbiResource(jdbiDao));
+		PersonJdbiRepository jdbiRepository = jdbi.onDemand(PersonJdbiRepository.class);
+		environment.jersey().register(new PeopleJdbiResource(jdbiRepository));
 
 	}
 }

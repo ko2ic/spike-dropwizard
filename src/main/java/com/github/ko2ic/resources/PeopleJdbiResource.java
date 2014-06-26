@@ -12,30 +12,30 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import com.github.ko2ic.core.Person;
-import com.github.ko2ic.db.PersonJdbiDao;
+import com.github.ko2ic.db.PersonJdbiRepository;
 import com.sun.jersey.api.NotFoundException;
 
 @Path("/people/jndi")
 @Produces(MediaType.APPLICATION_JSON)
 public class PeopleJdbiResource {
 
-	private final PersonJdbiDao peopleDAO;
+	private final PersonJdbiRepository repository;
 
-	public PeopleJdbiResource(PersonJdbiDao peopleDAO) {
-		this.peopleDAO = peopleDAO;
+	public PeopleJdbiResource(PersonJdbiRepository peopleDAO) {
+		this.repository = peopleDAO;
 	}
 
 	@GET
 	@UnitOfWork
 	public List<Person> listPeople() {
-		return peopleDAO.findAll();
+		return repository.findAll();
 	}
 
 	@GET
 	@UnitOfWork
 	@Path("/{personId}")
 	public Person getPerson(@PathParam("personId") LongParam personId) {
-		final Person person = peopleDAO.findById(personId.get());
+		final Person person = repository.findById(personId.get());
 		if (person == null) {
 			throw new NotFoundException("{status:notfound}");
 		}
