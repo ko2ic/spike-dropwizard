@@ -34,80 +34,67 @@ import com.sun.jersey.api.client.ClientResponse;
 
 public class PeopleResourceIntegrationTest {
 
-	private static final String FIXTURE_PATH = "fixtures/integrations/";
+    private static final String FIXTURE_PATH = "fixtures/integrations/";
 
-	private static Database database;
+    private static Database database;
 
-	private Liquibase migrations;
+    private Liquibase migrations;
 
-	@ClassRule
-	public static final DropwizardAppRule<HelloWorldConfiguration> RULE = new DropwizardAppRule<>(
-			HelloWorldApplication.class, "example.yml");
+    @ClassRule
+    public static final DropwizardAppRule<HelloWorldConfiguration> RULE = new DropwizardAppRule<>(HelloWorldApplication.class, "example.yml");
 
-	@BeforeClass
-	public static void beforeClass() throws SQLException, LiquibaseException {
-		database = createDatabase();
-	}
+    @BeforeClass
+    public static void beforeClass() throws SQLException, LiquibaseException {
+        database = createDatabase();
+    }
 
-	@AfterClass
-	public static void afterClass() throws DatabaseException, LockException {
-		database.close();
-		database = null;
-	}
+    @AfterClass
+    public static void afterClass() throws DatabaseException, LockException {
+        database.close();
+        database = null;
+    }
 
-	@Before
-	public void before() throws DatabaseException, SQLException,
-			LiquibaseException {
-		migrations = createLiquibase("migrations.xml");
-		String context = null;
-		migrations.update(context);
-	}
+    @Before
+    public void before() throws DatabaseException, SQLException, LiquibaseException {
+        migrations = createLiquibase("migrations.xml");
+        String context = null;
+        migrations.update(context);
+    }
 
-	@After
-	public void after() throws DatabaseException, LockException {
-		migrations.dropAll();
-	}
+    @After
+    public void after() throws DatabaseException, LockException {
+        migrations.dropAll();
+    }
 
-	@Test
-	public void testGetPerson() throws JsonParseException,
-			JsonMappingException, IOException, DatabaseException, SQLException,
-			LiquibaseException {
+    @Test
+    public void testGetPerson() throws JsonParseException, JsonMappingException, IOException, DatabaseException, SQLException, LiquibaseException {
 
-		Liquibase data = createLiquibase("data.xml");
-		data.update("testGetPerson");
+        Liquibase data = createLiquibase("data.xml");
+        data.update("testGetPerson");
 
-		Client client = new Client();
-		ClientResponse response = client.resource(
-				String.format("http://localhost:%d/people/2",
-						RULE.getLocalPort())).get(ClientResponse.class);
+        Client client = new Client();
+        ClientResponse response = client.resource(String.format("http://localhost:%d/people/2", RULE.getLocalPort())).get(ClientResponse.class);
 
-		assertThat(response.getStatus()).isEqualTo(200);
+        assertThat(response.getStatus()).isEqualTo(200);
 
-		String entity = response.getEntity(String.class);
-		assertThat(entity).isEqualTo(
-				FixtureHelpers.fixture(FIXTURE_PATH + "getPerson.json"));
+        String entity = response.getEntity(String.class);
+        assertThat(entity).isEqualTo(FixtureHelpers.fixture(FIXTURE_PATH + "getPerson.json"));
 
-	}
+    }
 
-	private Liquibase createLiquibase(String migrations) throws SQLException,
-			DatabaseException, LiquibaseException {
-		Liquibase liquibase = new Liquibase(migrations,
-				new ClassLoaderResourceAccessor(), database);
-		return liquibase;
-	}
+    private Liquibase createLiquibase(String migrations) throws SQLException, DatabaseException, LiquibaseException {
+        Liquibase liquibase = new Liquibase(migrations, new ClassLoaderResourceAccessor(), database);
+        return liquibase;
+    }
 
-	private static Database createDatabase() throws SQLException,
-			DatabaseException {
-		DataSourceFactory dataSourceFactory = RULE.getConfiguration()
-				.getDataSourceFactory();
-		Properties info = new Properties();
-		info.setProperty("user", dataSourceFactory.getUser());
-		info.setProperty("password", dataSourceFactory.getPassword());
-		org.h2.jdbc.JdbcConnection h2Conn = new org.h2.jdbc.JdbcConnection(
-				dataSourceFactory.getUrl(), info);
-		JdbcConnection conn = new JdbcConnection(h2Conn);
-		Database database = DatabaseFactory.getInstance()
-				.findCorrectDatabaseImplementation(conn);
-		return database;
-	}
+    private static Database createDatabase() throws SQLException, DatabaseException {
+        DataSourceFactory dataSourceFactory = RULE.getConfiguration().getDataSourceFactory();
+        Properties info = new Properties();
+        info.setProperty("user", dataSourceFactory.getUser());
+        info.setProperty("password", dataSourceFactory.getPassword());
+        org.h2.jdbc.JdbcConnection h2Conn = new org.h2.jdbc.JdbcConnection(dataSourceFactory.getUrl(), info);
+        JdbcConnection conn = new JdbcConnection(h2Conn);
+        Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(conn);
+        return database;
+    }
 }

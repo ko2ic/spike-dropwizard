@@ -24,26 +24,26 @@ import com.google.common.base.Optional;
 @Path("/hello-world")
 @Produces(MediaType.APPLICATION_JSON)
 public class HelloWorldResource {
-	private static final Logger LOGGER = LoggerFactory
-			.getLogger(HelloWorldResource.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldResource.class);
 
-	private final Template template;
-	private final AtomicLong counter;
+    private final Template template;
 
-	public HelloWorldResource(Template template) {
-		this.template = template;
-		this.counter = new AtomicLong();
-	}
+    private final AtomicLong counter;
 
-	@GET
-	@Timed(name = "get-requests")
-	@CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
-	public Saying sayHello(@QueryParam("name") Optional<String> name) {
-		return new Saying(counter.incrementAndGet(), template.render(name));
-	}
+    public HelloWorldResource(Template template) {
+        this.template = template;
+        this.counter = new AtomicLong();
+    }
 
-	@POST
-	public void receiveHello(@Valid Saying saying) {
-		LOGGER.info("Received a saying: {}", saying);
-	}
+    @GET
+    @Timed(name = "get-requests")
+    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
+    public Saying sayHello(@QueryParam("name") Optional<String> name) {
+        return new Saying(counter.incrementAndGet(), template.render(name));
+    }
+
+    @POST
+    public void receiveHello(@Valid Saying saying) {
+        LOGGER.info("Received a saying: {}", saying);
+    }
 }

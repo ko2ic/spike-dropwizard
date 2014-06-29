@@ -19,26 +19,26 @@ import com.sun.jersey.api.NotFoundException;
 @Produces(MediaType.APPLICATION_JSON)
 public class PeopleJdbiResource {
 
-	private final PersonJdbiRepository repository;
+    private final PersonJdbiRepository repository;
 
-	public PeopleJdbiResource(PersonJdbiRepository peopleDAO) {
-		this.repository = peopleDAO;
-	}
+    public PeopleJdbiResource(PersonJdbiRepository peopleDAO) {
+        this.repository = peopleDAO;
+    }
 
-	@GET
-	@UnitOfWork
-	public List<Person> listPeople() {
-		return repository.findAll();
-	}
+    @GET
+    @UnitOfWork
+    public List<Person> listPeople() {
+        return repository.findAll();
+    }
 
-	@GET
-	@UnitOfWork
-	@Path("/{personId}")
-	public Person getPerson(@PathParam("personId") LongParam personId) {
-		final Person person = repository.findById(personId.get());
-		if (person == null) {
-			throw new NotFoundException("{status:notfound}");
-		}
-		return person;
-	}
+    @GET
+    @UnitOfWork
+    @Path("/{personId}")
+    public Person getPerson(@PathParam("personId") LongParam personId) {
+        final Person person = repository.findById(personId.get());
+        if (person == null) {
+            throw new NotFoundException("{status:notfound}");
+        }
+        return person;
+    }
 }

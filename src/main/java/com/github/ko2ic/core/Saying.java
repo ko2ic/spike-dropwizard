@@ -1,7 +1,8 @@
 package com.github.ko2ic.core;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Length;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Saying {
     private long id;
@@ -26,5 +27,10 @@ public class Saying {
     @JsonProperty
     public String getContent() {
         return content;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("id=%d content=%s", getId(), getContent());
     }
 }

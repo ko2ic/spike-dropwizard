@@ -21,32 +21,32 @@ import com.sun.jersey.api.NotFoundException;
 @Produces(MediaType.APPLICATION_JSON)
 public class PeopleResource {
 
-	private final PersonRepository repository;
+    private final PersonRepository repository;
 
-	public PeopleResource(PersonRepository repository) {
-		this.repository = repository;
-	}
+    public PeopleResource(PersonRepository repository) {
+        this.repository = repository;
+    }
 
-	@POST
-	@UnitOfWork
-	public Person createPerson(Person person) {
-		return repository.create(person);
-	}
+    @POST
+    @UnitOfWork
+    public Person createPerson(Person person) {
+        return repository.create(person);
+    }
 
-	@GET
-	@UnitOfWork
-	public List<Person> listPeople() {
-		return repository.findAll();
-	}
+    @GET
+    @UnitOfWork
+    public List<Person> listPeople() {
+        return repository.findAll();
+    }
 
-	@GET
-	@UnitOfWork
-	@Path("/{personId}")
-	public Person getPerson(@PathParam("personId") LongParam personId) {
-		final Optional<Person> person = repository.findById(personId.get());
-		if (!person.isPresent()) {
-			throw new NotFoundException("{status:notfound}");
-		}
-		return person.get();
-	}
+    @GET
+    @UnitOfWork
+    @Path("/{personId}")
+    public Person getPerson(@PathParam("personId") LongParam personId) {
+        final Optional<Person> person = repository.findById(personId.get());
+        if (!person.isPresent()) {
+            throw new NotFoundException("Not Found Person");
+        }
+        return person.get();
+    }
 }

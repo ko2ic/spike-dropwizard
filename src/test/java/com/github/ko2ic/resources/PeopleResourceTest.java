@@ -14,25 +14,22 @@ import com.google.common.base.Optional;
 
 public class PeopleResourceTest {
 
-	private static final PersonRepository dao = mock(PersonRepository.class);
+    private static final PersonRepository dao = mock(PersonRepository.class);
 
-	@ClassRule
-	public static final ResourceTestRule resources = ResourceTestRule.builder()
-			.addResource(new PeopleResource(dao)).build();
+    @ClassRule
+    public static final ResourceTestRule resources = ResourceTestRule.builder().addResource(new PeopleResource(dao)).build();
 
-	private final Person person = new Person(1, "ko2ic", "job");
+    private final Person person = new Person(1, "ko2ic", "job");
 
-	@Before
-	public void setup() {
-		when(dao.findById(Long.parseLong("1"))).thenReturn(
-				Optional.fromNullable(person));
-	}
+    @Before
+    public void setup() {
+        when(dao.findById(Long.parseLong("1"))).thenReturn(Optional.fromNullable(person));
+    }
 
-	@Test
-	public void testGetPerson() {
-		assertThat(resources.client().resource("/people/1").get(Person.class))
-				.isEqualsToByComparingFields(person);
-		verify(dao).findById(Long.parseLong("1"));
-	}
+    @Test
+    public void testGetPerson() {
+        assertThat(resources.client().resource("/people/1").get(Person.class)).isEqualsToByComparingFields(person);
+        verify(dao).findById(Long.parseLong("1"));
+    }
 
 }

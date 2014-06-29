@@ -12,47 +12,47 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.ko2ic.core.Template;
 
 public class HelloWorldConfiguration extends Configuration {
-	@NotEmpty
-	private String template;
+    @NotEmpty
+    private String template;
 
-	@NotEmpty
-	private String defaultName = "Stranger";
+    @NotEmpty
+    private String defaultName = "Stranger";
 
-	@Valid
-	@NotNull
-	private DataSourceFactory database = new DataSourceFactory();
+    @Valid
+    @NotNull
+    private DataSourceFactory database = new DataSourceFactory();
 
-	@JsonProperty
-	public String getTemplate() {
-		return template;
-	}
+    @JsonProperty
+    public String getTemplate() {
+        return template;
+    }
 
-	@JsonProperty
-	public void setTemplate(String template) {
-		this.template = template;
-	}
+    @JsonProperty
+    public void setTemplate(String template) {
+        this.template = template;
+    }
 
-	@JsonProperty
-	public String getDefaultName() {
-		return defaultName;
-	}
+    @JsonProperty
+    public String getDefaultName() {
+        return defaultName;
+    }
 
-	@JsonProperty
-	public void setDefaultName(String defaultName) {
-		this.defaultName = defaultName;
-	}
+    @JsonProperty
+    public void setDefaultName(String defaultName) {
+        this.defaultName = defaultName;
+    }
 
-	public Template buildTemplate() {
-		return new Template(template, defaultName);
-	}
+    public Template buildTemplate() {
+        return new Template(template, defaultName);
+    }
 
-	@JsonProperty("database")
-	public DataSourceFactory getDataSourceFactory() {
-		return database;
-	}
+    @JsonProperty("database")
+    public DataSourceFactory getDataSourceFactory() {
+        return database;
+    }
 
-	@JsonProperty("database")
-	public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
-		this.database = dataSourceFactory;
-	}
+    @JsonProperty("database")
+    public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
+        this.database = dataSourceFactory;
+    }
 }

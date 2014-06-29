@@ -10,23 +10,22 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class SayingTest {
 
-	private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
+    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
 
-	private static final String FIXTURE = "fixtures/saying.json";
+    private static final String FIXTURE = "fixtures/saying.json";
 
-	@Test
-	public void deserializesFromJSON() throws Exception {
-		final Saying actual = new Saying(1, "Hello");
-		final Saying expected = MAPPER.readValue(
-				FixtureHelpers.fixture(FIXTURE), Saying.class);
-		assertThat(actual).isEqualsToByComparingFields(expected);
-	}
+    @Test
+    public void deserializesFromJSON() throws Exception {
+        final Saying actual = new Saying(1, "Hello");
+        final Saying expected = MAPPER.readValue(FixtureHelpers.fixture(FIXTURE), Saying.class);
+        assertThat(actual).isEqualsToByComparingFields(expected);
+    }
 
-	@Test
-	public void serializesToJSON() throws Exception {
-		final Saying target = new Saying(1, "Hello");
-		final String actual = MAPPER.writeValueAsString(target);
-		assertThat(actual).isEqualTo(FixtureHelpers.fixture(FIXTURE));
-	}
+    @Test
+    public void serializesToJSON() throws Exception {
+        final Saying target = new Saying(1, "Hello");
+        final String actual = MAPPER.writeValueAsString(target);
+        assertThat(actual).isEqualTo(FixtureHelpers.fixture(FIXTURE));
+    }
 
 }
