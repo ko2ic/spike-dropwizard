@@ -1,8 +1,9 @@
 package com.github.ko2ic.health;
 
+import java.util.Optional;
+
 import com.codahale.metrics.health.HealthCheck;
 import com.github.ko2ic.core.Template;
-import com.google.common.base.Optional;
 
 public class TemplateHealthCheck extends HealthCheck {
     private final Template template;

@@ -1,8 +1,10 @@
 package com.github.ko2ic.core;
 
-import com.google.common.base.Optional;
+
 
 import static java.lang.String.format;
+
+import java.util.Optional;
 
 public class Template {
     private final String content;
@@ -15,6 +17,6 @@ public class Template {
     }
 
     public String render(Optional<String> name) {
-        return format(content, name.or(defaultName));
+        return format(content, name.orElse(defaultName));
     }
 }

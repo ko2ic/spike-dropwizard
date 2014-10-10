@@ -4,6 +4,7 @@ import io.dropwizard.hibernate.UnitOfWork;
 import io.dropwizard.jersey.params.LongParam;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 
 import com.github.ko2ic.core.Person;
 import com.github.ko2ic.db.PersonRepository;
-import com.google.common.base.Optional;
 import com.sun.jersey.api.NotFoundException;
 
 @Path("/people")

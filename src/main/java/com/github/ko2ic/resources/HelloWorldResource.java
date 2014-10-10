@@ -2,6 +2,7 @@ package com.github.ko2ic.resources;
 
 import io.dropwizard.jersey.caching.CacheControl;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -19,7 +20,6 @@ import org.slf4j.LoggerFactory;
 import com.codahale.metrics.annotation.Timed;
 import com.github.ko2ic.core.Saying;
 import com.github.ko2ic.core.Template;
-import com.google.common.base.Optional;
 
 @Path("/hello-world")
 @Produces(MediaType.APPLICATION_JSON)

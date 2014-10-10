@@ -2,6 +2,9 @@ package com.github.ko2ic.resources;
 
 import static org.fest.assertions.api.Assertions.*;
 import static org.mockito.Mockito.*;
+
+import java.util.Optional;
+
 import io.dropwizard.testing.junit.ResourceTestRule;
 
 import org.junit.Before;
@@ -10,7 +13,6 @@ import org.junit.Test;
 
 import com.github.ko2ic.core.Person;
 import com.github.ko2ic.db.PersonRepository;
-import com.google.common.base.Optional;
 
 public class PeopleResourceTest {
 
@@ -23,7 +25,7 @@ public class PeopleResourceTest {
 
     @Before
     public void setup() {
-        when(dao.findById(Long.parseLong("1"))).thenReturn(Optional.fromNullable(person));
+        when(dao.findById(Long.parseLong("1"))).thenReturn(Optional.ofNullable(person));
     }
 
     @Test

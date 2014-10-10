@@ -3,11 +3,11 @@ package com.github.ko2ic.db;
 import io.dropwizard.hibernate.AbstractDAO;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.hibernate.SessionFactory;
 
 import com.github.ko2ic.core.Person;
-import com.google.common.base.Optional;
 
 public class PersonRepository extends AbstractDAO<Person> {
     public PersonRepository(SessionFactory factory) {
@@ -15,7 +15,7 @@ public class PersonRepository extends AbstractDAO<Person> {
     }
 
     public Optional<Person> findById(Long id) {
-        return Optional.fromNullable(get(id));
+        return Optional.ofNullable(get(id));
     }
 
     public Person create(Person person) {
