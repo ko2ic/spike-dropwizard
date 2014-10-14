@@ -19,11 +19,13 @@ import com.github.ko2ic.core.Person;
 import com.github.ko2ic.core.Template;
 import com.github.ko2ic.db.PersonJdbiRepository;
 import com.github.ko2ic.db.PersonRepository;
+import com.github.ko2ic.db.TempJdbiRepository;
 import com.github.ko2ic.health.TemplateHealthCheck;
 import com.github.ko2ic.resources.HelloWorldResource;
 import com.github.ko2ic.resources.PeopleJdbiResource;
 import com.github.ko2ic.resources.PeopleResource;
 import com.github.ko2ic.resources.ProtectedResource;
+import com.github.ko2ic.resources.TempJdbiResource;
 import com.github.ko2ic.resources.ViewResource;
 
 public class HelloWorldApplication extends Application<HelloWorldConfiguration> {
@@ -73,8 +75,11 @@ public class HelloWorldApplication extends Application<HelloWorldConfiguration> 
 
         final DBIFactory factory = new DBIFactory();
         final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "jdbi");
-        PersonJdbiRepository jdbiRepository = jdbi.onDemand(PersonJdbiRepository.class);
-        environment.jersey().register(new PeopleJdbiResource(jdbiRepository));
 
+        PersonJdbiRepository personJdbiRepository = jdbi.onDemand(PersonJdbiRepository.class);
+        environment.jersey().register(new PeopleJdbiResource(personJdbiRepository));
+
+        TempJdbiRepository tempJdbiRepository = jdbi.onDemand(TempJdbiRepository.class);
+        environment.jersey().register(new TempJdbiResource(tempJdbiRepository));
     }
 }

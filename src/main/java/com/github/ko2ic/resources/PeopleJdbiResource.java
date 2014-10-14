@@ -61,6 +61,18 @@ public class PeopleJdbiResource {
         return listPeople();
     }
 
+    @POST
+    @Path("/withTemp")
+    public String createWithTemp() {
+        // if this class should be transaction border, you must use "inTransaction" method.
+        List<Person> people = new ArrayList<Person>();
+        people.add(new Person("ko2ic", "batch3"));
+        people.add(new Person("ko2ic", "batch4"));
+        int count = repository.createWithTemp(people.iterator());
+
+        return String.format("{\"count\": %d}", count);
+    }
+
     @DELETE
     public String delete() {
         repository.deleteAll();
