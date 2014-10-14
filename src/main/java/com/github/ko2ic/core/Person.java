@@ -26,10 +26,14 @@ public class Person {
     public Person() {
     }
 
-    public Person(long id, String fullName, String jobTitle) {
-        this.id = id;
+    public Person(String fullName, String jobTitle) {
         this.fullName = fullName;
         this.jobTitle = jobTitle;
+    }
+
+    public Person(long id, String fullName, String jobTitle) {
+        this(fullName, jobTitle);
+        this.id = id;
     }
 
     public long getId() {
